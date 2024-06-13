@@ -1,0 +1,332 @@
+{% schema %}
+{
+  "name": "Image SliderX",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "My Section Heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image SliderX"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Description",
+      "type": "social",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "My Custom Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sample description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+        {
+      "name": "Image Block",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "block_image1",
+          "label": "Block Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "block_image2",
+          "label": "Block Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "block_image3",
+          "label": "Block Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+<div class="section-text-slider-container">
+  <!-- <h4 style="font-weight: 600">as seen in</h4>
+  <div>
+    <img src="{{ block.settings.block_image1 | img_url: '200x200' }}" alt="{{ block.settings.image_caption }}">
+    <img src="{{ block.settings.block_image2 | img_url: '200x200' }}" alt="{{ block.settings.image_caption }}">
+    <img src="{{ block.settings.block_image3 | img_url: '200x200' }}" alt="{{ block.settings.image_caption }}">
+  </div> -->
+  <div class="section-text-slider">
+    <div class="slider" id="shopify-slider">
+      <div class="slides">
+        {% if section.settings.image_1 != blank %}
+        <div class="slide">
+          <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="Image 1" />
+        </div>
+        {% endif %} {% if section.settings.image_2 != blank %}
+        <div class="slide">
+          <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="Image 2" />
+        </div>
+        {% endif %} {% if section.settings.image_3 != blank %}
+        <div class="slide">
+          <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="Image 3" />
+        </div>
+        {% endif %}
+      </div>
+      <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+      <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+
+    <div class="block-description-container">
+      <h1>{{ section.settings.section_heading }}</h1>
+      {% for block in section.blocks %}
+        <div class="block-description-container-wrapper">
+          <div class="icon-holder">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '200x200' }}" alt="Icon for {{ block.settings.heading }}" />
+            {% else %}
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 40 32" enable-background="new 0 0 40 32" xml:space="preserve"><g>
+                <path fill="#808184" d="M10.459,15.294c2.757,0,5-2.243,5-5s-2.243-5-5-5s-5,2.243-5,5S7.702,15.294,10.459,15.294z M10.459,6.294 c2.206,0,4,1.794,4,4s-1.794,4-4,4s-4-1.794-4-4S8.253,6.294,10.459,6.294z"/>
+            	<path fill="#808184" d="M40,30.5v-29C40,0.673,39.327,0,38.5,0h-37C0.673,0,0,0.673,0,1.5v29C0,31.327,0.673,32,1.5,32h37 C39.327,32,40,31.327,40,30.5z M1,30.5v-29C1,1.224,1.224,1,1.5,1h37C38.776,1,39,1.224,39,1.5v29c0,0.276-0.224,0.5-0.5,0.5h-37 C1.224,31,1,30.776,1,30.5z"/>
+            	<path fill="#808184" d="M27.73,11.086c-0.536-0.532-1.406-0.53-1.938,0.003L14.646,22.235c-0.143,0.145-0.371,0.147-0.519,0.008 l-2.583-2.429c-0.544-0.51-1.382-0.498-1.912,0.03l-6.986,6.99c-0.195,0.195-0.195,0.512,0,0.707 C2.744,27.639,2.872,27.688,3,27.688s0.256-0.049,0.354-0.146l6.986-6.989c0.144-0.143,0.372-0.146,0.52-0.008l2.583,2.428 c0.544,0.513,1.383,0.499,1.911-0.029l11.145-11.146c0.145-0.146,0.38-0.146,0.526-0.001l9.622,9.566 c0.196,0.196,0.513,0.194,0.707-0.002c0.195-0.196,0.194-0.512-0.002-0.707L27.73,11.086z"/> </g>
+              </svg>
+            {% endif %}
+          </div>
+          <div class="slider-description">
+            <h3 class='slider-description-heading'>{{ block.settings.heading }}</h3>
+            <p class="slider-description-paragraph">{{ block.settings.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+      
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+<!-- ****************************************************************************************************************** -->
+<!-- *************************************************** JAVASCRIPT ***************************************************  -->
+<!-- ****************************************************************************************************************** -->
+
+<script>
+let currentIndex = 0;
+
+function changeSlide(direction) {
+    const slides = document.querySelector('#shopify-slider .slides');
+    const totalSlides = document.querySelectorAll('#shopify-slider .slide').length;
+
+    currentIndex += direction;
+
+    if (currentIndex >= totalSlides) {
+        currentIndex = 0;
+    } else if (currentIndex < 0) {
+        currentIndex = totalSlides - 1;
+    }
+
+    slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(() => {
+        changeSlide(1);
+    }, 3000); // Change slide every 3 seconds
+});
+</script>
+
+
+
+<!-- ****************************************************************************************************************** -->
+<!-- ***************************************************** STYLES *****************************************************  -->
+<!-- ****************************************************************************************************************** -->
+
+<style>
+
+.section-text-slider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(255,240,220,1) 100%);
+}
+
+.section-text-slider {
+  width: 70%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 3rem;
+}
+  
+#shopify-slider {
+  background: orange;
+  position: relative;
+  max-width: 400px;
+  height: fit-content;
+  overflow: hidden;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#shopify-slider .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    
+}
+
+#shopify-slider .slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+#shopify-slider .slide img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+#shopify-slider button {
+    position: absolute;
+    background: none;
+    border: none;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    cursor: pointer;
+}
+
+#shopify-slider button.prev {
+    left: 10px;
+}
+
+#shopify-slider button.next {
+    right: 10px;
+}
+
+#shopify-slider button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* **************************** */
+
+.block-description-container > h1 {
+  font-size: 2.5rem;
+  margin: 0 0 5rem;
+}
+  
+
+.block-description-container-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  margin-bottom: 2.5rem;
+  
+}
+
+/* .slider-description {
+  margin-bottom: 2rem;
+} */
+
+.slider-description-heading, .slider-description-paragraph {
+  margin: 0;
+}
+
+.slider-description-heading {
+  color:  #01005B;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.slider-description-paragraph {
+  width: 400px;
+  line-height: 1.2;
+  margin-right: 2rem;
+}
+
+.icon-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  background: #ffedd6;
+  border-radius: 50%;
+  margin-right: 1rem;
+  overflow: hidden;
+}
+
+.icon-holder svg {
+  width: 60%;
+}
+
+@media screen and (max-width: 885px) {
+  .section-text-slider {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .block-description-container-wrapper {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  .block-description-container > h1 {
+    margin: 5rem 0;
+  }
+
+  .slider-description-paragraph {
+    width: 85%;
+  }
+
+  .slider-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon-holder {
+    margin-bottom: 1rem;
+  }
+}
+
+</style>
